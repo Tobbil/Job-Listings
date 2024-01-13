@@ -51,23 +51,55 @@ function Listing({
   isNew,
   isFeatured,
 }) {
-  console.log(isNew);
   return (
-    <div id={`listing-${id}`} className="listing">
-      <div id={`logo-container-${id}`} className="logo-container">
-        <img alt="" src={logo} width="70px" height="70px"></img>
+    <div className="listing-container">
+      <div
+        className={
+          isFeatured
+            ? "listing-featured-bar"
+            : "listing-featured-bar listing-featured-bar-hidden"
+        }
+      ></div>
+      <div id={`listing-${id}`} className="listing">
+        <div id={`logo-container-${id}`} className="logo-container">
+          <img alt="" src={logo} width="60px" height="60px"></img>
+        </div>
+        <Description
+          id={id}
+          company={company}
+          isNew={isNew}
+          isFeatured={isFeatured}
+          job={job}
+          postedAt={postedAt}
+          contract={contract}
+          location={location}
+        />
+        <Skills
+          id={id}
+          role={role}
+          level={level}
+          languages={languages}
+          tools={tools}
+        />
       </div>
-      <Description
-        id={id}
-        company={company}
-        isNew={isNew}
-        isFeatured={isFeatured}
-        job={job}
-        postedAt={postedAt}
-        contract={contract}
-        location={location}
-      />
     </div>
+  );
+}
+
+function Skills({ id, role, level, languages, tools }) {
+  const skills = [role, level, ...languages, ...tools];
+  return (
+    <>
+      <div id={`skills-container-${id}`} className="skills-container">
+        {skills.map((skill, index) => {
+          return (
+            <span key={`listing-${id}-skill-${index + 1}`} className="skill">
+              {skill}
+            </span>
+          );
+        })}
+      </div>
+    </>
   );
 }
 
@@ -96,7 +128,7 @@ function Description({
           postedAt={postedAt}
           contract={contract}
           location={location}
-        />{" "}
+        />
       </div>
     </>
   );
